@@ -1,0 +1,36 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model orders {
+  id           String    @id
+  pratos       pratos[]
+  bebidas      bebidas[]
+  costumerName String
+  isDelivered  Boolean
+  orderedAt    DateTime
+}
+
+model pratos {
+  id       String   @id @default(uuid())
+  nome     String
+  price    Boolean
+  orders   orders[]
+  ordersId String?
+}
+
+model bebidas {
+  id       String   @id
+  nome     String
+  price    Boolean
+  orders   orders[]
+  ordersId String?
+}

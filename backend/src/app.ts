@@ -4,11 +4,11 @@ class Server {
   private app: Application = express();
 
   constructor(private readonly port: number = 4000) {
-    this.getApp()
+    this.getApp();
   }
 
   private getApp() {
-    this.app.listen(() => {
+    this.app.listen(this.port, () => {
       console.log(`server is online on port ${this.port}`);
     });
   }
