@@ -11,18 +11,18 @@ datasource db {
 }
 
 model orders {
-  id           String    @id
+  id           String   @id @default(uuid())
   pratos       pratos[]
   bebidas      bebidas[]
   costumerName String
-  isDelivered  Boolean
-  orderedAt    DateTime
+  isDelivered  Int? @default(0)
+  orderedAt    DateTime? @default(now())
 }
 
 model pratos {
   id       String   @id @default(uuid())
   nome     String
-  price    Boolean
+  price    Float
   orders   orders[]
   ordersId String?
 }
@@ -30,7 +30,7 @@ model pratos {
 model bebidas {
   id       String   @id
   nome     String
-  price    Boolean
+  price     Float
   orders   orders[]
   ordersId String?
 }
