@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "tsx watch ./src/server.ts"
+    "dev": "tsx watch ./src/app.ts"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.51.0",

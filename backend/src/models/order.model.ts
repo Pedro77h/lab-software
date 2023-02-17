@@ -73,3 +73,5 @@ export class OrderModel {
     });
   }
 }
+
+export default new OrderModel

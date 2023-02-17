@@ -1,5 +1,5 @@
-import { OrderModel } from './../models/order.model';
-import { Request, Response } from 'express';
+import OrderModel from './../models/order.model';
+import { Request, response, Response } from 'express';
 
 interface CreateOrderProps {
   costumerName: string;
@@ -11,15 +11,13 @@ interface CreateOrderRequest<T> extends Request {
   body: T;
 }
 
-export class OrderController {
-  private orderModel = new OrderModel();
-
+class OrderController {
   async create(req: CreateOrderRequest<CreateOrderProps>, res: Response): Promise<Response> {
     const { bebidas, costumerName, pratos } = req.body;
 
     if (!bebidas || !costumerName || !pratos) return res.status(400);
 
-    const { order } = await this.orderModel.create({
+    const { order } = await OrderModel.create({
       bebidas,
       pratos,
       costumerName
@@ -31,7 +29,7 @@ export class OrderController {
   }
 
   async findOrders(req: Request, res: Response): Promise<Response> {
-    const { orders } = await this.orderModel.getAll();
+    const { orders } = await OrderModel.getAll();
 
     return res.status(200).send({
       orders
@@ -41,7 +39,7 @@ export class OrderController {
   async find(req: Request, res: Response) {
     const { orderId } = req.params;
 
-    const { order } = await this.orderModel.findOneOrFail(orderId);
+    const { order } = await OrderModel.findOneOrFail(orderId);
 
     if (!order) return res.status(404);
 
@@ -53,12 +51,18 @@ export class OrderController {
   async finish(req: Request, res: Response) {
     const { orderId } = req.params;
 
-    const { order } = await this.orderModel.findOneOrFail(orderId);
+    const { order } = await OrderModel.findOneOrFail(orderId);
 
-    if (!order) return res.status(404);
+    if (!order) return res.status(404).send();
 
-    await this.orderModel.finish(orderId);
+    if (order.isDelivered === 1) return res.status(409).send({
+      error: 'order already delivered'
+    });
 
-    return res.status(200);
+    await OrderModel.finish(orderId);
+
+    return res.status(200).send();
   }
 }
+
+export default new OrderController();
