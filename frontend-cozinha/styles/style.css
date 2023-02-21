@@ -1,5 +1,50 @@
-* {
-  box-sizing: border-box;
+*{
   margin: 0;
-  padding: 0;
+ padding: 0;
+ box-sizing: border-box;
+ 
 }
+label{
+color: white;
+
+}
+body{
+ background-image:linear-gradient(rgba(146, 38, 38, 1), rgb(36, 32, 32)) ;
+ width: 100%;
+ height: 100vh;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.entrar{
+ width: 150px;
+ height: 30px;
+ background-color:rgba(80, 65, 65, 1);
+ color: white;
+ border: none;
+ border-radius: 10px; 
+ transition: 0.5s;
+}
+
+.entrar:hover{
+ background-color: rgb(40, 38, 38);
+}
+.container{
+ justify-content: center;
+ align-items: center;
+ flex-direction: column;
+ padding: 1rem 3rem;
+ margin-left: 500px;
+ margin-right: 500px;
+ text-align: center;
+} 
+
+.container input{
+ height: 25px;
+ width:300px;
+ border-radius: 7px;    
+}
+.logo{
+width: 200px; 
+}
+
