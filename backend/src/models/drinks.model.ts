@@ -1,6 +1,5 @@
 import { ICreateDrink } from './../@types/ICreateDrink.type';
 import { bebidas, PrismaClient } from '@prisma/client';
-import { ICreateOrder } from '../@types/ICreateOrder.type';
 
 interface GetAllResponse {
   bebidas: bebidas[];
@@ -10,7 +9,7 @@ interface CreateResponse {
   bebida: bebidas;
 }
 
-export class DrinksOrder {
+export class DrinksModel {
   private prismaService = new PrismaClient();
 
   async getAll(): Promise<GetAllResponse> {
@@ -50,28 +49,20 @@ export class DrinksOrder {
     }
   }
 
-  async save(drinkId: string, data: ICreateOrder) {
-    try {
-      const bebida = await this.prismaService.bebidas.update({
-        where: {
-          id: drinkId
-        },
-        data
-      });
+  async save(drinkId: string, data: ICreateDrink) {
+    const bebida = await this.prismaService.bebidas.update({
+      where: {
+        id: drinkId
+      },
+      data
+    });
 
-      return {
-        bebida
-      };
-    } catch (err) {
-      return {
-        err
-      };
-    }
+    return {
+      bebida
+    };
   }
 
   async destroy(drinkId: string) {
-    const bebida = await this.findOneOrFail(drinkId);
-
     await this.prismaService.bebidas.delete({
       where: {
         id: drinkId
@@ -79,3 +70,5 @@ export class DrinksOrder {
     });
   }
 }
+
+export default new DrinksModel();
