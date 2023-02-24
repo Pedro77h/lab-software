@@ -16,7 +16,11 @@ export class OrderModel {
   private PrismaService = new PrismaClient();
 
   async getAll(): Promise<getAllResponse> {
-    const orders = await this.PrismaService.orders.findMany();
+    const orders = await this.PrismaService.orders.findMany({
+      orderBy: {
+        orderedAt: 'desc'
+      }
+    });
 
     return { orders };
   }
@@ -74,4 +78,4 @@ export class OrderModel {
   }
 }
 
-export default new OrderModel
+export default new OrderModel();

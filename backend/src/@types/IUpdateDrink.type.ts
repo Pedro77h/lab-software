@@ -1,3 +1,6 @@
 import { ICreateDrink } from './ICreateDrink.type';
 
-export interface IUpdateDrink extends ICreateDrink {}
+export interface IUpdateDrink {
+  nome?: string;
+  price?: number;
+}

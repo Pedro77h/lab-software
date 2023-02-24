@@ -1,3 +1,4 @@
+import { IUpdateDrink } from './../@types/IUpdateDrink.type';
 import { ICreateDrink } from './../@types/ICreateDrink.type';
 import { bebidas, PrismaClient } from '@prisma/client';
 
@@ -47,7 +48,7 @@ export class DrinksModel {
       };
     }
   }
-  async save(drinkId: string, data: ICreateDrink) {
+  async save(drinkId: string, data: IUpdateDrink) {
     const bebida = await this.prismaService.bebidas.update({
       where: {
         id: drinkId

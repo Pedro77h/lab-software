@@ -10,8 +10,7 @@ interface CreateDrinkRequest<T> extends Request {
 interface UpdateDrinkRequest<T> extends Request {
   body: T;
 }
-
-export class DrinkController {
+class DrinkController {
   async findAll(req: Request, res: Response) {
     const { bebidas } = await DrinksModel.getAll();
 
@@ -48,14 +47,18 @@ export class DrinkController {
   async update(req: UpdateDrinkRequest<IUpdateDrink>, res: Response) {
     const { nome, price } = req.body;
 
-    if (!DrinksModel.findOneOrFail(req.params.id)) res.status(404);
+    if (!DrinksModel.findOneOrFail(req.params.id)) {
+      console.log('aa');
+
+      return res.status(404);
+    }
 
     await DrinksModel.save(req.params.id, {
       nome,
       price
     });
 
-    res.status(204);
+    return res.status(204).send();
   }
 
   async destroy(req: Request, res: Response) {
@@ -63,6 +66,8 @@ export class DrinkController {
 
     await DrinksModel.destroy(req.params.id);
 
-    return res.status(202);
+    return res.status(202).send();
   }
 }
+
+export default new DrinkController();

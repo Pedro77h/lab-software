@@ -1,6 +1,7 @@
 import express, { Application } from 'express';
 import cors from 'cors';
 import orderRouter from './routes/order.route';
+import drinkRouter from './routes/drink.route';
 
 class Server {
   private app: Application = express();
@@ -25,6 +26,7 @@ class Server {
 
   private routes() {
     this.app.use('/pedidos', orderRouter);
+    this.app.use('/bebidas', drinkRouter);
   }
 }
 
