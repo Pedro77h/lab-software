@@ -31,24 +31,22 @@ export class DrinksModel {
     };
   }
 
-  async findOneOrFail(id: string): Promise<{ bebida: bebidas | null } | undefined> {
+  async findOneOrFail(drinkId: string) {
     try {
       const bebida = await this.prismaService.bebidas.findUnique({
         where: {
-          id
+          id: drinkId
         }
       });
-
       return {
         bebida
       };
-    } catch (err) {
+    } catch (error) {
       return {
-        bebida: null
+        error
       };
     }
   }
-
   async save(drinkId: string, data: ICreateDrink) {
     const bebida = await this.prismaService.bebidas.update({
       where: {

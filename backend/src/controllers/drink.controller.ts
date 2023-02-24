@@ -1,8 +1,13 @@
+import { IUpdateDrink } from './../@types/IUpdateDrink.type';
 import { ICreateDrink } from './../@types/ICreateDrink.type';
 import { Request, Response } from 'express';
 import DrinksModel from '../models/drinks.model';
 
 interface CreateDrinkRequest<T> extends Request {
+  body: T;
+}
+
+interface UpdateDrinkRequest<T> extends Request {
   body: T;
 }
 
@@ -28,5 +33,36 @@ export class DrinkController {
     return res.status(201).send({
       bebida
     });
+  }
+
+  async find(req: Request, res: Response) {
+    const { bebida } = await DrinksModel.findOneOrFail(req.params.id);
+
+    if (!bebida) return res.status(404);
+
+    return res.status(200).send({
+      bebida
+    });
+  }
+
+  async update(req: UpdateDrinkRequest<IUpdateDrink>, res: Response) {
+    const { nome, price } = req.body;
+
+    if (!DrinksModel.findOneOrFail(req.params.id)) res.status(404);
+
+    await DrinksModel.save(req.params.id, {
+      nome,
+      price
+    });
+
+    res.status(204);
+  }
+
+  async destroy(req: Request, res: Response) {
+    if (!DrinksModel.findOneOrFail(req.params.id)) res.status(404);
+
+    await DrinksModel.destroy(req.params.id);
+
+    return res.status(202);
   }
 }
