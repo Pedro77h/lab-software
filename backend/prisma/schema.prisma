@@ -28,7 +28,7 @@ model pratos {
 }
 
 model bebidas {
-  id       String   @id
+  id       String   @id @default(uuid())
   nome     String
   price     Float
   orders   orders[]
