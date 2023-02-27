@@ -60,9 +60,9 @@ export class OrderModel {
         order
       };
     } catch (error) {
-      return {
-        error
-      };
+      console.log(error);
+
+      return null;
     }
   }
 
